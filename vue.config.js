@@ -1,5 +1,6 @@
 module.exports = {
   lintOnSave: false,
+  outputDir: 'docs',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   pages: {
     index: {
@@ -11,7 +12,7 @@ module.exports = {
       filename: 'index.html'
     }
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     // packages和examples目录需要加入编译
     config.module
       .rule('js')
@@ -21,10 +22,9 @@ module.exports = {
       .end()
       .use('babel')
       .loader('babel-loader')
-      .tap(options => {
+      .tap((options) => {
         // 修改它的选项...
-        return options;
-      });
+        return options
+      })
   }
- 
 }

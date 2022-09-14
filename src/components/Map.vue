@@ -1,13 +1,17 @@
 <template>
-  <div class="hello">
+  <div class="home">
+    <div class="header">
+      <h1>项目采用Echarts/map和新浪api接口渲染</h1>
+      <a href="https://github.com/Sun1090/vue-map" target="_blank">Github地址</a>
+    </div>
     <div class="map" ref="mapbox"></div>
   </div>
 </template>
 
 <script>
-import echarts from "echarts";
-import jsonp from "jsonp";
-import "echarts/map/js/china";
+import echarts from 'echarts'
+import jsonp from 'jsonp'
+import 'echarts/map/js/china'
 // const option = {
 //     xAxis: {
 //         type: 'category',
@@ -23,44 +27,44 @@ import "echarts/map/js/china";
 // };
 const option = {
   title: {
-    text: "新型冠状病毒肺炎",
+    text: '新型冠状病毒肺炎',
     textStyle: {
-      color: "red",
+      color: 'red',
       fontSize: 24,
-      fontWeight: "bold"
+      fontWeight: 'bold'
     },
-    subtext: "疫情实时大数据报告",
+    subtext: '疫情实时大数据报告',
     subtextStyle: {
-      color: "#ccc",
+      color: '#ccc',
       fontSize: 36,
-      fontWeight: "normal"
+      fontWeight: 'normal'
     },
-    textVerticalAlign: "auto",
+    textVerticalAlign: 'auto',
     margin: 50
   },
   series: [
     {
-      name: "确诊人数",
-      type: "map",
-      map: "china",
+      name: '确诊人数',
+      type: 'map',
+      map: 'china',
       label: {
         show: true,
-        color: "#000",
+        color: '#000',
         fontSize: 10
       },
       itemStyle: {
-        areaStyle: "#83b5e7",
-        borderColor: "red"
+        areaStyle: '#83b5e7',
+        borderColor: 'red'
       },
       zoom: 1.3,
       //控制鼠标移动的颜色
       emphasis: {
         label: {
-          color: "#000",
+          color: '#000',
           fontSize: 16
         },
         itemStyle: {
-          areaColor: "#ccc"
+          areaColor: '#ccc'
         }
       },
       data: []
@@ -68,7 +72,7 @@ const option = {
   ],
   visualMap: [
     {
-      type: "piecewise",
+      type: 'piecewise',
       show: true,
       pieces: [
         { min: 10000 },
@@ -82,7 +86,7 @@ const option = {
       // showLabel:false
       inRange: {
         //symbol:'rect',//小圆圈
-        color: ["#ffc0b1", "#9c0505"]
+        color: ['#ffc0b1', '#9c0505']
       },
       // }
       // itemStyle:{
@@ -93,55 +97,56 @@ const option = {
     }
   ],
   tooltip: {
-    trigger: "item"
+    trigger: 'item'
   },
   toolBox: {
     show: true,
-    orient: "vertical",
-    left: "right",
-    top: "center",
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       dataView: { readOnly: false },
       restore: {},
       saveAsImage: {}
     }
   }
-};
+}
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   mounted() {
-    this.getData();
-    this.mychart = echarts.init(this.$refs.mapbox);
+    this.getData()
+    this.mychart = echarts.init(this.$refs.mapbox)
     // mychart.setOption(option)
-    this.mychart.setOption(option);
+    this.mychart.setOption(option)
   },
   methods: {
     getData() {
-      jsonp(
-        "https://interface.sina.cn/news/wap/fymap2020_data.d.json?_=1580892522427",
-        {},
-        (err, data) => {
-          if (!err) {
-            console.log(data);
-            let list = data.data.list.map(item => ({
-              name: item.name,
-              value: item.value
-            }));
-            option.series[0].data = list;
-            this.mychart.setOption(option);
-          }
+      jsonp('https://interface.sina.cn/news/wap/fymap2020_data.d.json?_=1580892522427', {}, (err, data) => {
+        if (!err) {
+          console.log(data)
+          let list = data.data.list.map((item) => ({
+            name: item.name,
+            value: item.value
+          }))
+          option.series[0].data = list
+          this.mychart.setOption(option)
         }
-      );
+      })
     }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.hello {
+.home {
   margin: 0;
   padding: 0;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .map {
   width: 580px;
